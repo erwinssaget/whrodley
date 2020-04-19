@@ -1,7 +1,8 @@
 const { Model } = require('objection');
 const { v4: uuidv4 } = require('uuid');
-const knex = require('../knex');
 const Message = require('./Message');
+const User = require('./User');
+const knex = require('../knex');
 
 Model.knex(knex);
 
@@ -23,6 +24,15 @@ class Course extends Model {
 
   static get relationMappings() {
     return {
+      owner: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: User,
+        join: {
+          from: 'courses.owner_id',
+          to: 'users.id',
+        },
+      },
+
       messages: {
         relation: Model.HasManyRelation,
         modelClass: Message,

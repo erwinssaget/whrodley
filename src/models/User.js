@@ -32,6 +32,7 @@ class User extends Model {
           through: {
             from: 'course_instructors.user_id',
             to: 'course_instructors.course_id',
+            extra: ['role'],
           },
           to: 'courses.id',
         },

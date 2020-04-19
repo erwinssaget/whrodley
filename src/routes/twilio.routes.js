@@ -1,11 +1,10 @@
 const router = require('express').Router();
 
-const courseController = require('../controllers/courses.controller');
+const twilioController = require('../controllers/twilio.controller')
 const requireAuthenticatedUser = require('../middleware/requireAuthenticatedUser');
 
 router.use(requireAuthenticatedUser);
 
-router.get('/create', courseController.showCreateCoursePage);
-router.post('/', courseController.store);
+router.post('/available-phone-numbers', twilioController.getAvailableNumbers);
 
 module.exports = router;

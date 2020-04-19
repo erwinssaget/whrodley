@@ -1,26 +1,21 @@
 /* eslint-disable */
 import React, { useState } from 'react';
-import { Dialog } from '@reach/dialog';
-import VisuallyHidden from '@reach/visually-hidden';
-import '@reach/dialog/styles.css';
+import http from '../http'
 
 export default function smsNumberPicker() {
+  const [areaCode, setAreaCode] = useState('')
   const [availableNumbers, setAvailableNumbers] = useState([]);
-  const [showDialog, setShowDialog] = React.useState(false);
-
-  const open = () => setShowDialog(true);
-  const close = () => setShowDialog(false);
 
   const fetchAvailableNumbers = async (event) => {
     event.preventDefault();
-    try {
-      const res = await fc.service('phone-numbers').find({
-        query: {
-          areaCode: areaCode.value,
-        },
-      });
 
-      setAvailableNumbers(res);
+    try {
+      const res = await http.post('/twilio/available-phone-numbers', {
+        areaCode: areaCode.value,
+      })
+
+      console.log(res)
+      // setAvailableNumbers(res);
     } catch (err) {
       console.log(err);
     }
@@ -29,42 +24,20 @@ export default function smsNumberPicker() {
   return (
     <div>
       <div>
-        <label
-          htmlFor="phone_number"
-          className="block text-sm font-medium leading-5 text-gray-700"
-        >
+        <label htmlFor="phone_number">
           Phone Number
         </label>
-        <div className="mt-1 relative rounded-md shadow-sm">
-          <div className="absolute inset-y-0 left-0 flex items-center">
-            <select
-              aria-label="Country"
-              className="form-select h-full py-0 pl-3 pr-7 border-transparent bg-transparent text-gray-500 sm:text-sm sm:leading-5"
-            >
-              <option>US</option>
-              <option>CA</option>
-              <option>EU</option>
-            </select>
-          </div>
-          <input
-            id="phone_number"
-            className="form-input block w-full pl-16 sm:text-sm sm:leading-5"
-            placeholder="+1 (555) 987-6543"
-          />
-        </div>
+        <input
+          id="phone_number"
+          className="form-control"
+          placeholder="+1 (555) 987-6543"
+        />
       </div>
+
       <div>
-        <label
-          htmlFor="area-code"
-          className="block text-sm font-medium leading-5 text-gray-700"
-        >
-          Area Code
-        </label>
-        <div className="mt-1 relative rounded-md shadow-sm">
-          <input
-            id="area-code"
-            className="form-input block w-full sm:text-sm sm:leading-5"
-          />
+        <label htmlFor="area-code">Area Code</label>
+        <div className="form-group">
+          <input id="area-code" className="form-control" />
         </div>
       </div>
     </div>

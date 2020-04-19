@@ -1,13 +1,23 @@
 {{!< default }}
 
-<form action="/teams" method="POST">
+{{#contentFor "breadcrumbs"}}
+<div class="breadcrumb-bar navbar bg-white sticky-top">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="/courses">Courses</a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">New Course</li>
+    </ol>
+  </nav>
+</div>
+{{/contentFor}}
+
+<form action="/courses" method="POST">
   <input type="hidden" name="_csrf" value="{{csrfToken}}">
-  <div>
-    <label for="name" class="block text-sm font-medium leading-5 text-gray-700">Team Name</label>
-    <div class="mt-1 relative rounded-md shadow-sm">
-      <input id="name" name="name" class="form-input block w-full sm:text-sm sm:leading-5" />
-    </div>
-    <p class="mt-2 text-sm text-gray-500">This is the name of your team (or business).</p>
+  <div class="form-group">
+    <label for="name">Course Name</label>
+    <input id="name" name="name" class="form-control" />
   </div>
 
   <div id="sms-number-picker"></div>

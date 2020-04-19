@@ -1,7 +1,7 @@
-const config = require('config');
+const CourseEvents = require('../events/course.events');
 const Course = require('../models/Course');
 const User = require('../models/User');
-const courseEvents = require('../events/course.events');
+const log = require('debug')('app:CourseController');
 
 module.exports = {
   index: (req, res) => {
@@ -21,32 +21,30 @@ module.exports = {
 
   /**
    * Stores a team in the database
-   *
-   * TODO: In the future, we will handle billing here
-   * to get the user's card info before we make
-   * calls to the twilio api
    */
   store: async (req, res, next) => {
+    console.log('im here');
     const { name } = req.body;
     const userId = req.session.user.id;
 
     // Create the team
     try {
-      const team = await Course.query().insert({
+      const course = await User.relatedQuery('courses').for(userId).insert({
         name: name,
-        owner_id: req.session.user.id,
+        owner_id: userId,
+        role: 'instructor',
       });
 
-      // Update the active Team for user
-      await User.query().findById(userId).patch({
-        activeTeamId: team.id,
-      });
+      console.log('im here');
+      debug(course);
 
       // Send out team
-      CourseEvents.emit('course-created', course);
+      // CourseEvents.emit('course-created', course);
 
-      res.redirect('/home');
+      // res.send('here');
+      // res.redirect('/home');
     } catch (err) {
+      console.log(err);
       next(err);
     }
   },
