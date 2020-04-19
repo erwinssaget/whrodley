@@ -62,8 +62,8 @@ To view database structure, visit [dbdiagram.io](https://dbdiagram.io/d/5e8fb551
 
 ### Models
 
-| Model | Table Name  | Purpose                                                     |
-| ----- | ----------- | ----------------------------------------------------------- |
-| User  | users       | holds all the users of the application.                     |
-| Team  | teams       | this is the teams (businesses) that our application serves  |
-|       | teams_users | join table that keeps track of which users belong to a team |
+| Model  | Table Name         | Purpose                                                             |
+| ------ | ------------------ | ------------------------------------------------------------------- |
+| User   | users              | holds all the users of the application.                             |
+| Course | courses            | an instructors courses                                              |
+|        | instructor_courses | join table that keeps track of which instructors belong to a course |
