@@ -1,0 +1,49 @@
+version: '2.4'
+
+services:
+  app:
+    image: app:${NODE_ENV:-development}
+    build:
+      context: .
+      target: ${NODE_ENV:-development}
+    ports:
+      - 3030:3030
+      - 9229:9229
+      - 35451:35451
+    volumes:
+      - ./:/opt/app:delegated
+      - /opt/app/node_modules/ # prevent mounting local node_modules
+    environment:
+      - DEBUG=app:*
+      - DB_URL=postgres://postgres:password@postgres:5432/whrodley
+      - NODE_ENV=development
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+  postgres:
+    image: postgres:12.2-alpine
+    user: postgres
+    healthcheck:
+      test: pg_isready -h 127.0.0.1
+    restart: always
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres-data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=whrodley
+  redis:
+    image: redis:5.0.8-alpine
+    volumes:
+      - redis-data:/data
+    ports:
+      - 6379:6379
+
+volumes:
+  postgres-data:
+  redis-data:

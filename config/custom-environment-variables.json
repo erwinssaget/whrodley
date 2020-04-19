@@ -1,0 +1,23 @@
+{
+  "appName": "APP_NAME",
+  "title": "APP_NAME",
+  "secret": "APP_KEY",
+  "postgres": {
+    "client": "postgresql",
+    "connection": "DB_URL"
+  },
+  "mail": {
+    "host": "MAIL_HOST",
+    "port": "MAIL_PORT",
+    "auth": {
+      "user": "MAIL_USER",
+      "pass": "MAIL_PASSWORD"
+    }
+  },
+  "twilioStatusCallbackUrl": "TWILIO_STATUS_CALLBACK_URL",
+  "redis": "REDIS_URL",
+  "twilio": {
+    "accountSid": "TWILIO_ACCOUNT_SID",
+    "authToken": "TWILIO_AUTH_TOKEN"
+  }
+}

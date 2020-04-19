@@ -1,0 +1,14 @@
+{{# if errors }}
+<div class="alert alert-danger">
+  <h6 class="alert-heading">
+    {{#if errors}}
+    There was an error with your submission.
+    {{/if}}
+  </h6>
+  {{# each errors }}
+  <p class="mb-0">
+    {{ this.msg }}
+  </p>
+  {{/each}}
+</div>
+{{/if}}

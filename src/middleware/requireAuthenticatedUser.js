@@ -1,0 +1,8 @@
+// Middleware that protects routes that require an authenticated user
+module.exports = (req, res, next) => {
+  if (req.session.user) {
+    return next();
+  }
+
+  res.redirect('/login');
+};
