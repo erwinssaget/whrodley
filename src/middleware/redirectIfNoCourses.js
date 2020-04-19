@@ -1,3 +1,4 @@
+const createError = require('http-errors');
 const User = require('../models/User');
 
 module.exports = async (req, res, next) => {
@@ -7,10 +8,10 @@ module.exports = async (req, res, next) => {
     return next(createError(401, 'Unauthorized'));
   }
 
-  const teams = await User.relatedQuery('teams').for(authenticatedUser.id);
+  const teams = await User.relatedQuery('courses').for(authenticatedUser.id);
 
   if (teams && teams.length === 0) {
-    return res.redirect('/teams/create');
+    return res.redirect('/courses/create');
   }
 
   next();

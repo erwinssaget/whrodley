@@ -1,8 +1,11 @@
 const router = require('express').Router();
 
 const { showHomePage } = require('../controllers/home.controller');
+const redirectIfNoCourses = require('../middleware/redirectIfNoCourses');
+const requireAuthenticatedUser = require('../middleware/requireAuthenticatedUser');
 
-// Url is /home
+router.use(requireAuthenticatedUser);
+router.use(redirectIfNoCourses);
 
 router.get('/', showHomePage);
 

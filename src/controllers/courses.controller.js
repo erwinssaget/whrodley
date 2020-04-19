@@ -4,6 +4,12 @@ const User = require('../models/User');
 const courseEvents = require('../events/course.events');
 
 module.exports = {
+  index: (req, res) => {
+    res.render('courses/index', {
+      csrfToken: req.csrfToken(),
+    });
+  },
+
   /**
    * Show the team create page
    */
@@ -26,7 +32,7 @@ module.exports = {
 
     // Create the team
     try {
-      const team = await Team.query().insert({
+      const team = await Course.query().insert({
         name: name,
         owner_id: req.session.user.id,
       });

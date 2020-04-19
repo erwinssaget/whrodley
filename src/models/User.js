@@ -30,8 +30,8 @@ class User extends Model {
         join: {
           from: 'users.id',
           through: {
-            from: 'instructors_courses.user_id',
-            to: 'instructors_courses.course_id',
+            from: 'course_instructors.user_id',
+            to: 'course_instructors.course_id',
           },
           to: 'courses.id',
         },

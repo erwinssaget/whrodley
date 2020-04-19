@@ -3,14 +3,14 @@ const User = require('../../src/models/User');
 
 exports.seed = function (knex) {
   // Deletes ALL existing entries
-  return knex('instructor_courses')
+  return knex('course_instructors')
     .del()
     .then(async function () {
       // const course = await Course.query().first();
       // const user = await User.query().first();
 
       // Inserts seed entries
-      return knex('instructor_courses').insert([
+      return knex('course_instructors').insert([
         // {
         //   course_id: course.id,
         //   user_id: user.id,
