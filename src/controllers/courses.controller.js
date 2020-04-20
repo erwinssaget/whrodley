@@ -23,10 +23,10 @@ module.exports = {
    * Stores a team in the database
    */
   store: async (req, res, next) => {
-    console.log('im here');
     const { name } = req.body;
     const userId = req.session.user.id;
 
+    log(`userId is ${userId}`);
     // Create the team
     try {
       const course = await User.relatedQuery('courses').for(userId).insert({
@@ -36,13 +36,13 @@ module.exports = {
       });
 
       console.log('im here');
-      debug(course);
+      log(course);
 
       // Send out team
       // CourseEvents.emit('course-created', course);
 
       // res.send('here');
-      // res.redirect('/home');
+      res.redirect('/home');
     } catch (err) {
       console.log(err);
       next(err);

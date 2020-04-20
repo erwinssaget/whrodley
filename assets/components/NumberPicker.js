@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import http from '../http'
 
-export default function smsNumberPicker() {
+export default function NumberPicker() {
   const [areaCode, setAreaCode] = useState('')
   const [availableNumbers, setAvailableNumbers] = useState([]);
 
@@ -11,9 +11,9 @@ export default function smsNumberPicker() {
 
     try {
       const res = await http.post('/twilio/available-phone-numbers', {
-        areaCode: areaCode.value,
+        areaCode,
       })
-
+      // comment
       console.log(res)
       // setAvailableNumbers(res);
     } catch (err) {
@@ -37,8 +37,9 @@ export default function smsNumberPicker() {
       <div>
         <label htmlFor="area-code">Area Code</label>
         <div className="form-group">
-          <input id="area-code" className="form-control" />
+          <input id="area-code" onChange={(e) => setAreaCode(e.target.value)} value={areaCode} className="form-control" />
         </div>
+        <button onClick={fetchAvailableNumbers}>View Possible Numbers</button>
       </div>
     </div>
   );

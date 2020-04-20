@@ -10,12 +10,9 @@ module.exports = async (req, res, next) => {
   }
 
   const courses = await User.relatedQuery('courses').for(user.id);
-  log(courses);
 
   if (courses && courses.length === 0) {
-    res.json(courses);
-    return;
-    // return res.redirect('/courses/create');
+    return res.redirect('/courses/create');
   }
 
   next();
