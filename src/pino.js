@@ -1,6 +1,6 @@
 const pinoDebug = require('pino-debug');
 const logger = require('pino')({
-  level: process.env.LOG_LEVEL || 'info',
+  level: process.env.LOG_LEVEL || 'warn',
   prettyPrint: process.env.NODE_ENV !== 'production',
 });
 const expressPino = require('express-pino-logger');

@@ -13,14 +13,22 @@
 </div>
 {{/contentFor}}
 
-<form action="/courses" method="POST">
-  <input type="hidden" name="_csrf" value="{{csrfToken}}">
-  <div class="form-group">
-    <label for="name">Course Name</label>
-    <input id="name" name="name" class="form-control" />
+<div class="pt-5">
+  <div class="card">
+    <div class="card-body">
+      <form action="/courses" method="POST" autocomplete="off">
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+        <div class="form-group">
+          <label for="name">Course Name</label>
+          <input id="name" name="name" class="form-control" autoComplete="off" required />
+        </div>
+
+        <div class="" id="sms-number-picker"></div>
+
+        <div class="row justify-content-end">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+    </div>
   </div>
-
-  <div id="sms-number-picker"></div>
-
-  <button type="submit">Submit</button>
-</form>
+</div>
