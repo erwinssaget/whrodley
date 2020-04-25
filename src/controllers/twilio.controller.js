@@ -10,7 +10,7 @@ module.exports = {
         .availablePhoneNumbers('US')
         .local.list({
           // inRegion: "AR", // in future may want to account for state?
-          areaCode: areaCode || 404,
+          areaCode: areaCode || 470,
           smsEnabled: true,
           excludeAllAddressRequired: true,
           limit: 7,
@@ -18,7 +18,6 @@ module.exports = {
 
       res.json(localNumbers);
     } catch (err) {
-      log(err);
       next(err);
     }
   },

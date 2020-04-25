@@ -1,5 +1,6 @@
 {
   "appName": "APP_NAME",
+  "host": "HOST",
   "title": "APP_NAME",
   "secret": "APP_KEY",
   "postgres": {

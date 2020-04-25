@@ -10,6 +10,6 @@ const setUpTwilioSubAccount = async function (course) {
   });
 };
 
-CourseEvents.on('course-created', setUpTwilioSubAccount);
+// CourseEvents.on('course-created', setUpTwilioSubAccount);
 
 module.exports = CourseEvents;

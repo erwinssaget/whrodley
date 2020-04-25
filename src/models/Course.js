@@ -18,6 +18,12 @@ class Course extends Model {
 
       properties: {
         name: 'string',
+        avatar: 'string',
+        owner_id: 'integer',
+        twilio_sid: 'string',
+        twilio_auth_token: 'string',
+        phone_number: 'string',
+        friendly_phone_number: 'string',
       },
     };
   }

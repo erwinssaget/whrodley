@@ -53,13 +53,14 @@ export default function NumberPicker() {
         </div>
 
         <div className="col-6">
-          <label htmlFor="phone_number"> Phone Number </label>
+          <label htmlFor="phone_number">Phone Number</label>
           <input
             id="phone_number"
+            name="phone_number"
             className="form-control"
             placeholder=""
             autoComplete="off"
-            onChange={() => {}}
+            onChange={(e) => { }}
             value={selectedPhoneNumber}
             required
           />

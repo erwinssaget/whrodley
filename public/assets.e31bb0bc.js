@@ -31197,7 +31197,7 @@ function Threads() {
               case 0:
                 _context.prev = 0;
                 _context.next = 3;
-                return _http.default.get('/messages');
+                return _http.default.get('messages');
 
               case 3:
                 res = _context.sent;
@@ -31238,7 +31238,7 @@ function Threads() {
               event.preventDefault();
 
               try {
-                _http.default.post('/messages', {
+                _http.default.post('messages', {
                   body: message
                 });
               } catch (error) {
@@ -31388,12 +31388,13 @@ function NumberPicker() {
     className: "col-6"
   }, /*#__PURE__*/_react.default.createElement("label", {
     htmlFor: "phone_number"
-  }, " Phone Number "), /*#__PURE__*/_react.default.createElement("input", {
+  }, "Phone Number"), /*#__PURE__*/_react.default.createElement("input", {
     id: "phone_number",
+    name: "phone_number",
     className: "form-control",
     placeholder: "",
     autoComplete: "off",
-    onChange: function onChange() {},
+    onChange: function onChange(e) {},
     value: selectedPhoneNumber,
     required: true
   }))), /*#__PURE__*/_react.default.createElement("div", {

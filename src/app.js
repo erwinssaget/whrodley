@@ -1,4 +1,3 @@
-require('dotenv').config();
 const compression = require('compression');
 const config = require('config');
 const cookieParser = require('cookie-parser');

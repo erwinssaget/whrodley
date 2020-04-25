@@ -10,24 +10,26 @@
 </div>
 {{/contentFor}}
 
-<div>
-  home page
+<div class="row pt-4">
   {{#each courses}}
-    <div class="card card-team">
-  <div class="card-body">
-    <div class="dropdown card-options">
-      <button class="btn-options" type="button" id="..." data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <i class="material-icons">more_vert</i>
-      </button>
-      <div class="dropdown-menu dropdown-menu-right">
-        ...
+  <div class="card card-team">
+    <div class="card-body">
+      <div class="dropdown card-options">
+        <button class="btn-options" type="button" id="..." data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">
+          <i class="material-icons">more_vert</i>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right">
+          ...
+        </div>
+      </div>
+      <div class="card-title">
+        <a href="courses/{{this.id}}/messages">
+          <h5>{{ this.name }}</h5>
+        </a>
+        <span># Projects, # Members</span>
       </div>
     </div>
-    <div class="card-title">
-      <a href="#"><h5>{{ this.name }}</h5></a>
-      <span># Projects, # Members</span>
-    </div>
   </div>
-</div>
   {{/each}}
 </div>

@@ -10,11 +10,7 @@ const twilioRoutes = require('./twilio.routes');
 
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
-
-if (process.env.NODE_ENV !== 'test') {
-  router.use(csrf({ cookie: true }));
-}
-
+router.use(csrf({ cookie: true }));
 router.use('/', loginRoutes);
 router.use('/register', registrationRoutes);
 router.use('/home', homeRoutes);

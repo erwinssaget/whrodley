@@ -1,12 +1,23 @@
+require('dotenv').config();
 const pino = require('pino');
-const app = require('./app');
-const debug = require('debug')('app:index');
+const pinoDebug = require('pino-debug');
 const { logger } = require('./pino');
+pinoDebug(logger, {
+  auto: true, // default
+  map: {
+    'app:*': 'info',
+    'express:router': 'debug',
+    '*': 'trace', // everything else - trace
+  },
+});
+const log = require('debug')('app:Index')
+
+const app = require('./app');
 
 const PORT = process.env.PORT || 3030;
 
 const server = app.listen(PORT, () =>
-  debug(`App started in ${process.env.NODE_ENV} mode on port ${PORT}`)
+  log(`App started in ${process.env.NODE_ENV} mode on port ${PORT}`)
 );
 
 process.on(
@@ -27,7 +38,7 @@ process.on(
 
 // quit on ctrl-c
 process.on('SIGINT', () => {
-  debug(
+  log(
     'Got SIGINT (aka ctrl-c). Graceful shutdown ',
     new Date().toISOString()
   );
@@ -36,7 +47,7 @@ process.on('SIGINT', () => {
 
 // quit properly when sent shutdown signal
 process.on('SIGTERM', () => {
-  debug('Got SIGTERM. Graceful shutdown ', new Date().toISOString());
+  log('Got SIGTERM. Graceful shutdown ', new Date().toISOString());
   shutdown();
 });
 
@@ -45,7 +56,7 @@ function shutdown() {
   // NOTE: server.close is for express based apps
   server.close((err) => {
     if (err) {
-      debug(err);
+      log(err);
       process.exitCode = 1;
     }
     process.exit();

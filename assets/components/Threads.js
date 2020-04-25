@@ -10,7 +10,7 @@ export default function Threads() {
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const res = await http.get('/messages');
+        const res = await http.get('messages');
         setMessages(res.data);
         setNumbers([...new Set(res.data.map((msg) => msg.to))]);
       } catch (err) {
@@ -25,7 +25,7 @@ export default function Threads() {
     event.preventDefault();
 
     try {
-      http.post('/messages', {
+      http.post('messages', {
         body: message,
       });
     } catch (error) {
