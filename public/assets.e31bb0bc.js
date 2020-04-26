@@ -73786,48 +73786,61 @@ exports.default = Sidebar;
 
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
 
-var _react = _interopRequireDefault(require("react"));
+var _react = _interopRequireWildcard(require("react"));
 
 var _reactstrap = require("reactstrap");
 
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function ChatTeamSidebarTop() {
+function ChatTeamSidebarTop(_ref) {
+  var toggleModal = _ref.toggleModal;
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "chat-team-sidebar-top"
   }, /*#__PURE__*/_react.default.createElement("h5", {
     className: "mb-1 text-center"
   }, "Students"), /*#__PURE__*/_react.default.createElement("button", {
+    onClick: toggleModal,
     type: "button",
-    className: ""
+    className: "btn btn-primary btn-block"
   }, "Add Student"));
-}
+} // TODO: if no students show that there no students
+
 
 function ChatTeamSidebarBottom() {
-  var _React$useState = _react.default.useState([]),
-      _React$useState2 = (0, _slicedToArray2.default)(_React$useState, 2),
-      students = _React$useState2[0],
-      setStudents = _React$useState2[1];
-
-  var _useState = useState(false),
+  var _useState = (0, _react.useState)([]),
       _useState2 = (0, _slicedToArray2.default)(_useState, 2),
-      modal = _useState2[0],
-      setModal = _useState2[1];
-
-  var toggle = function toggle() {
-    return setModal(!modal);
-  };
+      students = _useState2[0],
+      setStudents = _useState2[1];
 
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "chat-team-sidebar-bottom"
   }, /*#__PURE__*/_react.default.createElement("form", {
     className: "px-3 mb-3"
-  }), /*#__PURE__*/_react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    className: "input-group input-group-round"
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    className: "input-group-prepend"
+  }, /*#__PURE__*/_react.default.createElement("span", {
+    className: "input-group-text"
+  }, /*#__PURE__*/_react.default.createElement("i", {
+    className: "material-icons"
+  }, "filter_list"))), /*#__PURE__*/_react.default.createElement("input", {
+    type: "search",
+    className: "form-control filter-list-input",
+    placeholder: "Filter members",
+    "aria-label": "Filter Members",
+    "aria-describedby": "filter-members"
+  }))), /*#__PURE__*/_react.default.createElement("div", {
     className: "list-group list-group-flush"
-  }, students.map(function (student, i) {
-    return /*#__PURE__*/_react.default.createElement("a", {
+  }, students.map(function (student) {
+    return /*#__PURE__*/_react.default.createElement("button", {
+      type: "button",
       className: "list-group-item list-group-item-action",
-      key: i
+      key: student
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "media media-member mb-0"
     }, /*#__PURE__*/_react.default.createElement("div", {
@@ -73841,13 +73854,77 @@ function ChatTeamSidebarBottom() {
 }
 
 function Sidebar() {
+  var _useState3 = (0, _react.useState)(''),
+      _useState4 = (0, _slicedToArray2.default)(_useState3, 2),
+      name = _useState4[0],
+      setName = _useState4[1];
+
+  var _useState5 = (0, _react.useState)(''),
+      _useState6 = (0, _slicedToArray2.default)(_useState5, 2),
+      number = _useState6[0],
+      setNumber = _useState6[1];
+
+  var _useState7 = (0, _react.useState)(false),
+      _useState8 = (0, _slicedToArray2.default)(_useState7, 2),
+      modal = _useState8[0],
+      setModal = _useState8[1];
+
+  var toggleModal = function toggleModal() {
+    return setModal(!modal);
+  };
+
+  var handleSubmit = function handleSubmit(e) {
+    e.preventDefault();
+    toggleModal();
+    setName('');
+    setNumber('');
+  };
+
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "sidebar collapse"
   }, /*#__PURE__*/_react.default.createElement("div", {
     className: "sidebar-content"
   }, /*#__PURE__*/_react.default.createElement("div", {
     className: "chat-team-sidebar text-small"
-  }, /*#__PURE__*/_react.default.createElement(ChatTeamSidebarTop, null), /*#__PURE__*/_react.default.createElement(ChatTeamSidebarBottom, null))));
+  }, /*#__PURE__*/_react.default.createElement(ChatTeamSidebarTop, {
+    toggleModal: toggleModal
+  }), /*#__PURE__*/_react.default.createElement(ChatTeamSidebarBottom, null))), /*#__PURE__*/_react.default.createElement(_reactstrap.Modal, {
+    isOpen: modal,
+    toggle: toggleModal
+  }, /*#__PURE__*/_react.default.createElement(_reactstrap.ModalHeader, {
+    toggle: toggleModal
+  }, "Add Student"), /*#__PURE__*/_react.default.createElement(_reactstrap.ModalBody, null, /*#__PURE__*/_react.default.createElement("form", {
+    onSubmit: handleSubmit
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    className: "form-group"
+  }, /*#__PURE__*/_react.default.createElement("label", {
+    htmlFor: "name"
+  }, "Student Name"), /*#__PURE__*/_react.default.createElement("input", {
+    className: "form-control",
+    value: name,
+    onChange: function onChange(e) {
+      return setName(e.target.value);
+    },
+    id: "name",
+    name: "name"
+  })), /*#__PURE__*/_react.default.createElement("div", {
+    className: "form-group"
+  }, /*#__PURE__*/_react.default.createElement("label", {
+    htmlFor: "number"
+  }, "Phone Number"), /*#__PURE__*/_react.default.createElement("input", {
+    className: "form-control",
+    value: number,
+    onChange: function onChange(e) {
+      return setNumber(e.target.value);
+    },
+    id: "number",
+    name: "number"
+  })), /*#__PURE__*/_react.default.createElement("button", {
+    type: "submit"
+  }, "Submit Form"))), /*#__PURE__*/_react.default.createElement(_reactstrap.ModalFooter, null, /*#__PURE__*/_react.default.createElement("button", {
+    type: "button",
+    onClick: toggleModal
+  }, "Cancel"))));
 }
 },{"@babel/runtime/helpers/slicedToArray":"../../node_modules/@babel/runtime/helpers/slicedToArray.js","react":"../../node_modules/react/index.js","reactstrap":"../node_modules/reactstrap/es/index.js"}],"../../node_modules/axios/lib/helpers/bind.js":[function(require,module,exports) {
 'use strict';
