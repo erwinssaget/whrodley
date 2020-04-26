@@ -1,0 +1,29 @@
+{{!< default }}
+
+{{#contentFor "breadcrumbs"}}
+<div class="breadcrumb-bar navbar bg-white sticky-top">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item" aria-current="page">
+        <a href="/courses">Courses</a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">{{ course.name }}</li>
+    </ol>
+  </nav>
+</div>
+{{/contentFor}}
+
+{{#contentFor "sidebar-links"}}
+<hr>
+<div class="d-none d-lg-block w-100">
+  <span class="text-small text-muted">Quick Links</span>
+  <ul class="nav nav-small flex-column mt-2">
+    <li class="nav-item">
+      <a href="/courses/{{ course.id }}/messages" class="nav-link">Messages</a>
+    </li>
+  </ul>
+  <hr>
+</div>
+{{/contentFor}}
+
+this is a specific course page

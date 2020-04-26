@@ -1,56 +1,53 @@
-const debug = require('debug')('app:messages-controller');
 const config = require('config');
 const createError = require('http-errors');
 const Message = require('../models/Message');
 const twilio = require('twilio');
-const Team = require('../models/Team');
+const Course = require('../models/Course');
+const log = require('debug')('app:MessagesController');
 
 module.exports = {
   index: async (req, res, next) => {
-    if (req.xhr) {
-      const teamId = req.session.user.activeTeamId;
+    try {
+      const courseId = req.params.courseId;
+      const course = await Course.query().findById(courseId);
 
-      const team = await Team.query().findById(teamId);
+      if (req.xhr) {
+        const messages = await course
+          .$relatedQuery('messages')
+          .where('course_id', course.id);
 
-      const messages = await team
-        .$relatedQuery('messages')
-        .where('team_id', team.id);
+        log(messages);
 
-      console.log(messages);
+        return res.json(messages);
+      }
 
-      res.json(messages);
-      return;
+      res.render('messages/index', {
+        course,
+        csrfToken: req.csrfToken(),
+      });
+    } catch (err) {
+      next(err);
     }
-
-    res.render('messages/index', {
-      csrfToken: req.csrfToken(),
-    });
   },
 
   store: async (req, res, next) => {
-    const teamId = req.session.user.activeTeamId;
-
-    if (!teamId) {
-      throw new createError.NotFound(
-        'No team was found for authenticated user.'
-      );
-    }
+    const courseId = req.params.courseId;
 
     // get the team associated with authenticated user
-    const team = await Team.query().findById(teamId);
+    const course = await Course.query().findById(courseId);
 
-    const twilioClient = twilio(team.twilio_sid, team.twilio_auth_token);
+    const twilioClient = twilio(course.twilio_sid, course.twilio_auth_token);
 
     const { body } = req.body;
 
     try {
       const twilioResponse = await twilioClient.messages.create({
         body,
-        from: team.phone_number, //'+14048825335',
+        from: course.phone_number,
         to: '+14705297124',
       });
 
-      debug(twilioResponse);
+      log(twilioResponse);
 
       const message = await Message.query().insert({
         // account_sid: twilioResponse.accountSid,
@@ -68,8 +65,7 @@ module.exports = {
     }
   },
 
-  twilio_callback: (req, res, next) => {
-    console.log(req.body);
-    res.json({ test: 'received message' });
+  handleIncoming: (req, res, next) => {
+    log(req.body);
   },
 };

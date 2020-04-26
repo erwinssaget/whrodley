@@ -1,17 +1,34 @@
 {{!< default }}
-this is the team create page
 
-<form action="/teams" method="POST">
-  <input type="hidden" name="_csrf" value="{{csrfToken}}">
-  <div>
-    <label for="name" class="block text-sm font-medium leading-5 text-gray-700">Team Name</label>
-    <div class="mt-1 relative rounded-md shadow-sm">
-      <input id="name" name="name" class="form-input block w-full sm:text-sm sm:leading-5" />
+{{#contentFor "breadcrumbs"}}
+<div class="breadcrumb-bar navbar bg-white sticky-top">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="/courses">Courses</a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">New Course</li>
+    </ol>
+  </nav>
+</div>
+{{/contentFor}}
+
+<div class="pt-5">
+  <div class="card">
+    <div class="card-body">
+      <form action="/courses" method="POST" autocomplete="off">
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+        <div class="form-group">
+          <label for="name">Course Name</label>
+          <input id="name" name="name" class="form-control" autoComplete="off" required />
+        </div>
+
+        <div class="" id="sms-number-picker"></div>
+
+        <div class="row justify-content-end">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
     </div>
-    <p class="mt-2 text-sm text-gray-500">This is the name of your team (or business).</p>
   </div>
-
-  <div id="sms-number-picker"></div>
-
-  <button type="submit">Submit</button>
-</form>
+</div>

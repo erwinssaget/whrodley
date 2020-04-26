@@ -12,8 +12,8 @@ const errors = require('../../src/error-messages');
 chai.use(chaiHttp);
 const uri = '/login';
 
-describe('AuthController', function() {
-  before(function(done) {
+describe('AuthController', function () {
+  before(function (done) {
     knex.migrate
       .rollback()
       .then(() => knex.migrate.latest())
@@ -22,19 +22,19 @@ describe('AuthController', function() {
       .catch(done);
   });
 
-  after(function(done) {
-    knex.migrate.rollback().then(function() {
+  after(function (done) {
+    knex.migrate.rollback().then(function () {
       done();
     });
   });
 
-  describe('POST /login', function() {
-    it('requires an email', function(done) {
+  describe('POST /login', function () {
+    it('requires an email', function (done) {
       chai
         .request(app)
         .post(`${uri}`)
         .send({ password: 'password' })
-        .end(function(err, res) {
+        .end(function (err, res) {
           expect(err).to.be.null;
           expect(res).to.have.status(422);
           expect(res.body.errors).to.include.any.keys('email');
@@ -46,12 +46,12 @@ describe('AuthController', function() {
         });
     });
 
-    it('requires a password', function(done) {
+    it('requires a password', function (done) {
       chai
         .request(app)
         .post(`${uri}`)
         .send({ email: 'heelo@gmail.com' })
-        .end(function(err, res) {
+        .end(function (err, res) {
           expect(err).to.be.null;
           expect(res).to.have.status(422);
           expect(res.body.errors).to.include.keys('password');
@@ -63,16 +63,16 @@ describe('AuthController', function() {
         });
     });
 
-    it('checks if password matches (wrong)', function(done) {
+    it('checks if password matches (wrong)', function (done) {
       const email = faker.internet.email();
 
       User.create({ name: 'Example User', email, password: 'password' }).then(
-        user => {
+        (user) => {
           chai
             .request(app)
             .post(`${uri}`)
             .send({ email, password: 'password1' })
-            .end(function(err, res) {
+            .end(function (err, res) {
               expect(err).to.be.null;
               expect(res).to.have.status(400);
               expect(res.body.errors).to.include({
@@ -80,23 +80,23 @@ describe('AuthController', function() {
               });
               done();
             });
-        },
+        }
       );
     });
 
-    it('checks if password matches (right)', function(done) {
+    it('checks if password matches (right)', function (done) {
       const email = faker.internet.email();
 
       User.create({
         name: 'Example User',
         email,
         password: 'badpassword',
-      }).then(user => {
+      }).then((user) => {
         chai
           .request(app)
           .post(`${uri}`)
           .send({ email, password: 'badpassword' })
-          .end(function(err, res) {
+          .end(function (err, res) {
             expect(err).to.be.null;
             expect(res).to.have.status(200);
             expect(res.body).to.include.keys('token');
@@ -105,7 +105,7 @@ describe('AuthController', function() {
       });
     });
 
-    it('checks if users exists', function(done) {
+    it('checks if users exists', function (done) {
       chai
         .request(app)
         .post(`${uri}`)
@@ -113,7 +113,7 @@ describe('AuthController', function() {
           email: 'emailthatdoesntexist@gmail.com',
           password: 'password1',
         })
-        .end(function(err, res) {
+        .end(function (err, res) {
           expect(err).to.be.null;
           expect(res).to.have.status(400);
           expect(res.body.errors).to.include({ email: errors.USER_NOT_FOUND });

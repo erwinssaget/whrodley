@@ -1,2 +1,2 @@
-require('./authController.spec');
-require('./userController.spec');
+require('./login.controller.spec');
+require('./register.controller.spec');

@@ -28,7 +28,7 @@ module.exports = {
       req.session.cookie.maxAge = 1000 * 60 * 60 * 24 * 30; // 30 days
     }
 
-    return res.redirect('home');
+    return res.redirect('/home');
   },
 
   logout: async (req, res, next) => {

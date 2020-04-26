@@ -4,7 +4,7 @@
 knex migrate:latest
 
 # Run seed files
-knex seed:run
+# knex seed:run
 
 # Pass in the args from CMD
 exec "$@"
