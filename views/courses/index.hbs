@@ -10,47 +10,53 @@
 </div>
 {{/contentFor}}
 
-<div class="row pt-5">
-  {{#each courses}}
-  <div class="col-lg-6">
-    <div class="card card-project">
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-lg-11 col-xl-9">
+      <div class="row pt-5">
+        {{#each courses}}
+        <div class="col-lg-6">
+          <div class="card card-project">
 
-      <div class="card-body">
-        <div class="dropdown card-options">
-          <button class="btn-options" type="button" id="project-dropdown-button-4" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            <i class="material-icons">more_vert</i>
-          </button>
-          <div class="dropdown-menu dropdown-menu-right">
-            <a class="dropdown-item" href="#">Edit</a>
-            <a class="dropdown-item" href="#">Share</a>
+            <div class="card-body">
+              <div class="dropdown card-options">
+                <button class="btn-options" type="button" id="project-dropdown-button-4" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+                  <i class="material-icons">more_vert</i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right">
+                  <a class="dropdown-item" href="#">Edit</a>
+                  <a class="dropdown-item" href="#">Share</a>
+                </div>
+              </div>
+              <div class="card-title">
+                <a href="/courses/{{ this.id }}">
+                  <h5>{{ this.name }}</h5>
+                </a>
+              </div>
+              <ul class="avatars">
+                <li>
+                  <a href="#" data-toggle="tooltip" title="Krishna">
+                    <img alt="Krishna Bajaj" class="avatar" src="assets/img/avatar-female-6.jpg" data-filter-by="alt" />
+                  </a>
+                </li>
+                <li>
+                  <a href="#" data-toggle="tooltip" title="Harry">
+                    <img alt="Harry Xai" class="avatar" src="assets/img/avatar-male-2.jpg" data-filter-by="alt" />
+                  </a>
+                </li>
+              </ul>
+              <div class="card-meta d-flex justify-content-between">
+                <div class="d-flex align-items-center">
+                  <i class="material-icons mr-1">settings_phone</i>
+                  <span class="text-small">{{ this.friendly_phone_number }}</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="card-title">
-          <a href="/courses/{{ this.id }}">
-            <h5>{{ this.name }}</h5>
-          </a>
-        </div>
-        <ul class="avatars">
-          <li>
-            <a href="#" data-toggle="tooltip" title="Krishna">
-              <img alt="Krishna Bajaj" class="avatar" src="assets/img/avatar-female-6.jpg" data-filter-by="alt" />
-            </a>
-          </li>
-          <li>
-            <a href="#" data-toggle="tooltip" title="Harry">
-              <img alt="Harry Xai" class="avatar" src="assets/img/avatar-male-2.jpg" data-filter-by="alt" />
-            </a>
-          </li>
-        </ul>
-        <div class="card-meta d-flex justify-content-between">
-          <div class="d-flex align-items-center">
-            <i class="material-icons mr-1">settings_phone</i>
-            <span class="text-small">{{ this.friendly_phone_number }}</span>
-          </div>
-        </div>
+        {{/each}}
       </div>
     </div>
   </div>
-  {{/each}}
 </div>

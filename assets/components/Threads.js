@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-// import axios from 'axios';
+import ChatModule from './ChatModule'
+import Sidebar from './Sidebar'
 import http from '../http';
 
 export default function Threads() {
@@ -34,23 +35,9 @@ export default function Threads() {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <input
-            id="body"
-            name="message-body"
-            className="form-input block w-full pl-16 sm:text-sm sm:leading-5"
-            value={message.value}
-            onChange={(e) => setMessage(e.target.value)}
-          />
-        </div>
-        <button type="submit">Send Message</button>
-      </form>
-
-      <ul>
-        {messages && messages.map((msg) => <li key={msg.id}>{msg.body}</li>)}
-      </ul>
+    <div className="content-container">
+      <ChatModule />
+      <Sidebar />
     </div>
   );
 }

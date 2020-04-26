@@ -15,7 +15,6 @@
       "pass": "MAIL_PASSWORD"
     }
   },
-  "twilioStatusCallbackUrl": "TWILIO_STATUS_CALLBACK_URL",
   "redis": "REDIS_URL",
   "twilio": {
     "accountSid": "TWILIO_ACCOUNT_SID",

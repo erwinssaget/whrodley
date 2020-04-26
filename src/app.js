@@ -15,7 +15,9 @@ const { expressLogger } = require('./pino');
 const app = express();
 
 configureLocals(app);
-app.use(expressLogger);
+if (process.env.NODE_ENV !== 'test') {
+  app.use(expressLogger);
+}
 app.use(cors());
 app.use(helmet());
 app.use(cookieParser(config.get('secret')));

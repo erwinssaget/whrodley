@@ -1,1 +1,17 @@
-{}
+{
+  "postgres": {
+    "client": "sqlite3",
+    "connection": {
+      "filename": ":memory:"
+    },
+    "useNullAsDefault": true,
+    "migrations": {
+      "directory": "./database/migrations",
+      "tableName": "migrations"
+    }
+  },
+  "twilio": {
+    "accountSid": "ACdummyValue",
+    "authToken": "dummyToken"
+  }
+}
