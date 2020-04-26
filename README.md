@@ -30,9 +30,6 @@ root folder in this repository and rename to `.env`. You will also need to creat
 ## Useful Commands
 
 ```bash
-# Generating a unique key
-$ cat /dev/urandom | env LC_CTYPE=C tr -dc _A-Za-z0-9 | head -c${1:-64}
-
 # Running with docker
 $ docker-compose up # add --build to rebuild images
 $ docker-compose down # to stop processes, add -v to remove named volumes
@@ -55,15 +52,3 @@ $ knex seed:make seed_name
 # Seeds database
 $ knex seed:run
 ```
-
-## Database
-
-To view database structure, visit [dbdiagram.io](https://dbdiagram.io/d/5e8fb55139d18f5553fd6263)
-
-### Models
-
-| Model  | Table Name         | Purpose                                                             |
-| ------ | ------------------ | ------------------------------------------------------------------- |
-| User   | users              | holds all the users of the application.                             |
-| Course | courses            | an instructors courses                                              |
-|        | instructor_courses | join table that keeps track of which instructors belong to a course |
