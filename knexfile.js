@@ -11,7 +11,7 @@ const dbUrl = process.env.DB_URL;
 const migrations = {
   directory: './database/migrations',
   tableName: 'migrations',
-  stub: './database/migration.stub'
+  stub: './database/migration.stub',
 };
 
 const seeds = {

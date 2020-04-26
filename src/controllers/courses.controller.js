@@ -18,7 +18,7 @@ module.exports = {
         courses,
       });
     } catch (err) {
-      next(err)
+      next(err);
     }
   },
 
@@ -38,7 +38,7 @@ module.exports = {
     // we need to add middleware to validate input
     const { name, phone_number } = req.body;
 
-    console.log(req.body)
+    console.log(req.body);
     const userId = req.session.user.id;
 
     try {
@@ -55,25 +55,30 @@ module.exports = {
         twilio_auth_token: subAccount.authToken,
       });
 
-      log(course)
+      log(course);
 
       // purchase a phone number
       const baseUrl = config.get('host');
-      const courseTwilioClient = new twilio(course.twilio_sid, course.twilio_auth_token);
-      const twilioPhoneNumber = await courseTwilioClient.incomingPhoneNumbers.create({
-        phoneNumber: phone_number,
-        // need to add sms_url which is the url we call when phone_number receives
-        // an incoming message. Thinking something like /courses/:courseId/messages
-        smsUrl: `${baseUrl}/courses/${course.id}/messages`
-      });
+      const courseTwilioClient = new twilio(
+        course.twilio_sid,
+        course.twilio_auth_token
+      );
+      const twilioPhoneNumber = await courseTwilioClient.incomingPhoneNumbers.create(
+        {
+          phoneNumber: phone_number,
+          // need to add sms_url which is the url we call when phone_number receives
+          // an incoming message. Thinking something like /courses/:courseId/messages
+          smsUrl: `${baseUrl}/courses/${course.id}/messages`,
+        }
+      );
 
       // after getting phoneNumber need to patch course
       const result = await course.$query().findById(course.id).patch({
         phone_number: twilioPhoneNumber.phoneNumber,
-        friendly_phone_number: twilioPhoneNumber.friendlyName
-      })
+        friendly_phone_number: twilioPhoneNumber.friendlyName,
+      });
 
-      log(result)
+      log(result);
 
       res.redirect('/home');
     } catch (err) {
@@ -83,14 +88,14 @@ module.exports = {
 
   show: async (req, res, next) => {
     try {
-      const course = await Course.query().findById(req.params.courseId)
+      const course = await Course.query().findById(req.params.courseId);
 
       res.render('courses/show', {
         course,
         csrfToken: req.csrfToken(),
       });
     } catch (err) {
-      next(err)
+      next(err);
     }
-  }
+  },
 };

@@ -46,43 +46,7 @@
             <a class="nav-link" href="/courses">Courses</a>
           </li>
         </ul>
-        <hr>
-        <div class="d-none d-lg-block w-100">
-          <span class="text-small text-muted">Quick Links</span>
-          <ul class="nav nav-small flex-column mt-2">
-            <li class="nav-item">
-              <a href="nav-side-team.html" class="nav-link">Team Overview</a>
-            </li>
-            <li class="nav-item">
-              <a href="nav-side-project.html" class="nav-link">Project</a>
-            </li>
-          </ul>
-          <hr>
-        </div>
-        <div>
-          <form>
-            <div class="input-group input-group-dark input-group-round">
-              <div class="input-group-prepend">
-                <span class="input-group-text">
-                  <i class="material-icons">search</i>
-                </span>
-              </div>
-              <input type="search" class="form-control form-control-dark" placeholder="Search" aria-label="Search app"
-                aria-describedby="search-app">
-            </div>
-          </form>
-          <div class="dropdown mt-2">
-            <button class="btn btn-primary btn-block dropdown-toggle" type="button" id="newContentButton"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Add New
-            </button>
-            <div class="dropdown-menu" aria-labelledby="newContentButton">
-              <a class="dropdown-item" href="#">Team</a>
-              <a class="dropdown-item" href="#">Project</a>
-              <a class="dropdown-item" href="#">Task</a>
-            </div>
-          </div>
-        </div>
+        {{{block "sidebar-links"}}}
       </div>
       <div class="d-none d-lg-block">
         <div class="dropup">

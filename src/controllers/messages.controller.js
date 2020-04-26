@@ -1,30 +1,33 @@
-const debug = require('debug')('app:messages-controller');
 const config = require('config');
 const createError = require('http-errors');
 const Message = require('../models/Message');
 const twilio = require('twilio');
 const Course = require('../models/Course');
+const log = require('debug')('app:MessagesController');
 
 module.exports = {
   index: async (req, res, next) => {
-    if (req.xhr) {
+    try {
       const courseId = req.params.courseId;
-
       const course = await Course.query().findById(courseId);
 
-      const messages = await course
-        .$relatedQuery('messages')
-        .where('team_id', team.id);
+      if (req.xhr) {
+        const messages = await course
+          .$relatedQuery('messages')
+          .where('course_id', course.id);
 
-      console.log(messages);
+        log(messages);
 
-      res.json(messages);
-      return;
+        return res.json(messages);
+      }
+
+      res.render('messages/index', {
+        course,
+        csrfToken: req.csrfToken(),
+      });
+    } catch (err) {
+      next(err);
     }
-
-    res.render('messages/index', {
-      csrfToken: req.csrfToken(),
-    });
   },
 
   store: async (req, res, next) => {
@@ -40,11 +43,11 @@ module.exports = {
     try {
       const twilioResponse = await twilioClient.messages.create({
         body,
-        from: course.phone_number, //'+14048825335',
+        from: course.phone_number,
         to: '+14705297124',
       });
 
-      debug(twilioResponse);
+      log(twilioResponse);
 
       const message = await Message.query().insert({
         // account_sid: twilioResponse.accountSid,
@@ -60,5 +63,9 @@ module.exports = {
       req.log.error(error);
       next(error);
     }
+  },
+
+  handleIncoming: (req, res, next) => {
+    log(req.body);
   },
 };
