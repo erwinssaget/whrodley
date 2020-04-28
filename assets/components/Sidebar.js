@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import {
-  Modal, ModalHeader, ModalBody, ModalFooter
-} from 'reactstrap';
+import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import http from '../http';
 
 function ChatTeamSidebarTop({ toggleModal }) {
   return (
@@ -12,15 +11,18 @@ function ChatTeamSidebarTop({ toggleModal }) {
         type="button"
         className="btn btn-primary btn-block"
       >
-        Add Student
+        Invite Student
       </button>
     </div>
   );
 }
 
-// TODO: if no students show that there no students
 function ChatTeamSidebarBottom() {
   const [students, setStudents] = useState([]);
+
+  if (students.length === 0) {
+    return <p className="text-center">No Students Yet!</p>;
+  }
 
   return (
     <div className="chat-team-sidebar-bottom">
@@ -66,13 +68,33 @@ export default function Sidebar() {
   const [modal, setModal] = useState(false);
 
   const toggleModal = () => setModal(!modal);
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const data = {
+      name,
+      number,
+    };
+    console.log(data);
+    const response = await http.post('/students', data);
+    console.log(response.data);
+
     toggleModal();
     setName('');
     setNumber('');
   };
 
+  const closeBtn = (
+    <button
+      onClick={() => setModal(false)}
+      type="button"
+      className="close btn btn-round"
+      aria-label="Close"
+    >
+      <i className="material-icons">close</i>
+    </button>
+  );
   return (
     <div className="sidebar collapse">
       <div className="sidebar-content">
@@ -83,7 +105,9 @@ export default function Sidebar() {
       </div>
 
       <Modal isOpen={modal} toggle={toggleModal}>
-        <ModalHeader toggle={toggleModal}>Add Student</ModalHeader>
+        <ModalHeader close={closeBtn} toggle={toggleModal}>
+          Invite Student
+        </ModalHeader>
         <ModalBody>
           <form onSubmit={handleSubmit}>
             <div className="form-group">
@@ -107,11 +131,17 @@ export default function Sidebar() {
                 name="number"
               />
             </div>
-            <button type="submit">Submit Form</button>
+            <button className="btn btn-primary" type="submit">
+              Submit Form
+            </button>
           </form>
         </ModalBody>
         <ModalFooter>
-          <button type="button" onClick={toggleModal}>
+          <button
+            className="btn btn-secondary"
+            type="button"
+            onClick={toggleModal}
+          >
             Cancel
           </button>
         </ModalFooter>

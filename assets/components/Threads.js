@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import ChatModule from './ChatModule'
-import Sidebar from './Sidebar'
+import ChatModule from './ChatModule';
+import Sidebar from './Sidebar';
 import http from '../http';
 
 export default function Threads() {

@@ -9,22 +9,17 @@ module.exports = {
   index: async (req, res, next) => {
     try {
       const courseId = req.params.courseId;
+      log('im here');
+      log(courseId);
       const course = await Course.query().findById(courseId);
+      log(course);
 
-      if (req.xhr) {
-        const messages = await course
-          .$relatedQuery('messages')
-          .where('course_id', course.id);
+      // const messages = await course
+      //   .$relatedQuery('messages')
+      //   .where('course_id', course.id);
+      const messages = [];
 
-        log(messages);
-
-        return res.json(messages);
-      }
-
-      res.render('messages/index', {
-        course,
-        csrfToken: req.csrfToken(),
-      });
+      return res.json(messages);
     } catch (err) {
       next(err);
     }
@@ -63,9 +58,5 @@ module.exports = {
       req.log.error(error);
       next(error);
     }
-  },
-
-  handleIncoming: (req, res, next) => {
-    log(req.body);
   },
 };

@@ -16,7 +16,7 @@ const app = express();
 
 configureLocals(app);
 if (process.env.NODE_ENV !== 'test') {
-  app.use(expressLogger);
+  // app.use(expressLogger);
 }
 app.use(cors());
 app.use(helmet());

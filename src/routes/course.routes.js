@@ -7,7 +7,6 @@ const requireAuthenticatedUser = require('../middleware/requireAuthenticatedUser
 router.use(requireAuthenticatedUser);
 
 router.get('/create', courseController.showCreateCoursePage);
-router.get('/', courseController.index);
 router.post('/', courseController.store);
 router.get('/:courseId', courseController.show);
 router.get('/:courseId/messages', messagesController.index);

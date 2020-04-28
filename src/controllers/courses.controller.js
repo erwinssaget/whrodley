@@ -7,21 +7,6 @@ const rootTwilioClient = require('../twilio');
 const log = require('debug')('app:CourseController');
 
 module.exports = {
-  index: async (req, res, next) => {
-    try {
-      const user = req.session.user;
-
-      const courses = await User.relatedQuery('courses').for(user.id);
-
-      res.render('courses/index', {
-        csrfToken: req.csrfToken(),
-        courses,
-      });
-    } catch (err) {
-      next(err);
-    }
-  },
-
   /**
    * Show the team create page
    */
@@ -54,8 +39,6 @@ module.exports = {
         twilio_sid: subAccount.sid,
         twilio_auth_token: subAccount.authToken,
       });
-
-      log(course);
 
       // purchase a phone number
       const baseUrl = config.get('host');
