@@ -15,6 +15,12 @@
       "pass": "MAIL_PASSWORD"
     }
   },
+  "pusher": {
+    "appId": "PUSHER_APP_ID",
+    "key": "PUSHER_APP_KEY",
+    "secret": "PUSHER_APP_SECRET",
+    "cluster": "PUSHER_CLUSTER"
+  },
   "redis": "REDIS_URL",
   "twilio": {
     "accountSid": "TWILIO_ACCOUNT_SID",

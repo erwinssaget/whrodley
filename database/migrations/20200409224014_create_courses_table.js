@@ -12,7 +12,6 @@ exports.up = function (knex) {
     table.string('twilio_auth_token').nullable();
     table.string('phone_number').nullable();
     table.string('friendly_phone_number').nullable();
-    table.jsonb('twilio_meta').nullable();
 
     table.timestamp('created_at');
     table.timestamp('updated_at');

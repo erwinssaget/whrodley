@@ -30,9 +30,7 @@
               <img alt="Image" src="/assets/img/avatar-male-4.jpg" class="avatar" />
             </a>
             <div class="dropdown-menu dropdown-menu-right">
-              <a href="nav-side-user.html" class="dropdown-item">Profile</a>
-              <a href="utility-account-settings.html" class="dropdown-item">Account Settings</a>
-              <a href="#" class="dropdown-item">Log Out</a>
+              <a href="/logout" class="dropdown-item">Log Out</a>
             </div>
           </div>
         </div>
@@ -40,24 +38,17 @@
       <div class="collapse navbar-collapse flex-column" id="navbar-collapse">
         <ul class="navbar-nav d-lg-block">
           <li class="nav-item">
-            <a class="nav-link" href="/home">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/courses">Courses</a>
+            <a class="nav-link" href="/home">Courses</a>
+            <a class="nav-link" href="/courses/create">New Course</a>
           </li>
         </ul>
         {{{block "sidebar-links"}}}
       </div>
       <div class="d-none d-lg-block">
         <div class="dropup">
-          <a href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <img alt="Image" src="/assets/img/avatar-male-4.jpg" class="avatar" />
+          <a href="/logout" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span>Logout</span>
           </a>
-          <div class="dropdown-menu">
-            <a href="nav-side-user.html" class="dropdown-item">Profile</a>
-            <a href="utility-account-settings.html" class="dropdown-item">Account Settings</a>
-            <a href="#" class="dropdown-item">Log Out</a>
-          </div>
         </div>
       </div>
     </div>
@@ -67,6 +58,7 @@
       {{{body}}}
     </div>
   </div>
+  {{{block "globals"}}}
   {{jsAssetPath 'index.js'}}
 </body>
 
