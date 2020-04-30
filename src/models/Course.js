@@ -1,7 +1,5 @@
 const { Model } = require('objection');
 const { v4: uuidv4 } = require('uuid');
-const Message = require('./Message');
-const User = require('./User');
 const knex = require('../knex');
 
 Model.knex(knex);
@@ -29,6 +27,10 @@ class Course extends Model {
   }
 
   static get relationMappings() {
+    const Message = require('./Message');
+    const User = require('./User');
+    const Student = require('./Student')
+
     return {
       owner: {
         relation: Model.BelongsToOneRelation,
@@ -47,6 +49,19 @@ class Course extends Model {
           to: 'messages.course_id',
         },
       },
+
+      students: {
+        relation: Model.ManyToManyRelation,
+        modelClass: Student,
+        join: {
+          from: 'courses.id',
+          through: {
+            from: 'course_roster.course_id',
+            to: 'course_roster.student_id',
+          },
+          to: 'students.id',
+        },
+      }
     };
   }
 

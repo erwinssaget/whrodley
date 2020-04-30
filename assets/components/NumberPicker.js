@@ -4,19 +4,29 @@ import http from '../http';
 
 export default function NumberPicker() {
   const [areaCode, setAreaCode] = useState('');
-  const [availableNumbers, setAvailableNumbers] = useState(null);
+  const [availableNumbers, setAvailableNumbers] = useState([]);
   const [selectedPhoneNumber, setSelectedPhoneNumber] = useState('');
+  const [helpText, setHelpText] = useState(null)
 
   const fetchAvailableNumbers = async (event) => {
     event.preventDefault();
 
     try {
+      setHelpText("Fetching available numbers...")
       const res = await http.post('/twilio/available-phone-numbers', {
         areaCode,
       });
-      setAvailableNumbers(res.data);
+
+      if (res.data.length !== 0) {
+        setAvailableNumbers(res.data);
+        setHelpText(null)
+        return;
+      }
+
+      setHelpText("No phone numbers found for that area code =(")
     } catch (err) {
       console.log(err);
+    } finally {
     }
   };
 
@@ -50,6 +60,7 @@ export default function NumberPicker() {
               autoComplete="off"
             />
           </div>
+          {helpText && (<small className="form-text text-muted">{helpText}</small>)}
         </div>
 
         <div className="col-6">
@@ -68,14 +79,15 @@ export default function NumberPicker() {
       </div>
 
       <div className="col-6">
-        <ul className="list-group">
+        <ul className="list-group pt-1 shadow-lg">
           {availableNumbers &&
             availableNumbers.map((number) => (
               <li
-                className="list-group-item list-group-item-action"
+                onClick={(e) => selectNumber(number)}
+                className="list-group-item list-group-item-action text-center"
                 key={number.phoneNumber}
               >
-                <span onClick={(e) => selectNumber(number)}>
+                <span>
                   {number.friendlyName}
                 </span>
               </li>

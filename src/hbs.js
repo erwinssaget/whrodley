@@ -15,6 +15,10 @@ hbs.registerHelper('jsAssetPath', function (text, options) {
   return new hbs.SafeString(`<script src="${assets[text]}"></script>`);
 });
 
+hbs.registerHelper('json', function (context) {
+  return JSON.stringify(context);
+});
+
 module.exports = (app) => {
   app.engine(
     'hbs',

@@ -8,23 +8,14 @@ const log = require('debug')('app:MessagesController');
 module.exports = {
   index: async (req, res, next) => {
     try {
-      const courseId = req.params.courseId;
+      const { courseId } = req.params;
       const course = await Course.query().findById(courseId);
 
-      if (req.xhr) {
-        const messages = await course
-          .$relatedQuery('messages')
-          .where('course_id', course.id);
+      const messages = await course
+        .$relatedQuery('messages')
+        .where('course_id', course.id);
 
-        log(messages);
-
-        return res.json(messages);
-      }
-
-      res.render('messages/index', {
-        course,
-        csrfToken: req.csrfToken(),
-      });
+      return res.json(messages);
     } catch (err) {
       next(err);
     }
@@ -47,15 +38,17 @@ module.exports = {
         to: '+14705297124',
       });
 
+      console.log(`
+
+
+      `);
       log(twilioResponse);
 
       const message = await Message.query().insert({
-        // account_sid: twilioResponse.accountSid,
-        team_id: team.id,
+        course_id: courseId,
         body,
         from: twilioResponse.from,
         to: twilioResponse.to,
-        // TODO: add status callback
       });
 
       res.json(message);
@@ -63,9 +56,5 @@ module.exports = {
       req.log.error(error);
       next(error);
     }
-  },
-
-  handleIncoming: (req, res, next) => {
-    log(req.body);
   },
 };

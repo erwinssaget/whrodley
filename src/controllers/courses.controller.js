@@ -7,21 +7,6 @@ const rootTwilioClient = require('../twilio');
 const log = require('debug')('app:CourseController');
 
 module.exports = {
-  index: async (req, res, next) => {
-    try {
-      const user = req.session.user;
-
-      const courses = await User.relatedQuery('courses').for(user.id);
-
-      res.render('courses/index', {
-        csrfToken: req.csrfToken(),
-        courses,
-      });
-    } catch (err) {
-      next(err);
-    }
-  },
-
   /**
    * Show the team create page
    */
@@ -32,13 +17,12 @@ module.exports = {
   },
 
   /**
-   * Stores a team in the database
+   * Stores a course
    */
   store: async (req, res, next) => {
     // we need to add middleware to validate input
     const { name, phone_number } = req.body;
 
-    console.log(req.body);
     const userId = req.session.user.id;
 
     try {
@@ -55,8 +39,6 @@ module.exports = {
         twilio_auth_token: subAccount.authToken,
       });
 
-      log(course);
-
       // purchase a phone number
       const baseUrl = config.get('host');
       const courseTwilioClient = new twilio(
@@ -68,7 +50,7 @@ module.exports = {
           phoneNumber: phone_number,
           // need to add sms_url which is the url we call when phone_number receives
           // an incoming message. Thinking something like /courses/:courseId/messages
-          smsUrl: `${baseUrl}/courses/${course.id}/messages`,
+          smsUrl: `${baseUrl}/twilio/${course.id}/sms/incoming`,
         }
       );
 
@@ -89,6 +71,9 @@ module.exports = {
   show: async (req, res, next) => {
     try {
       const course = await Course.query().findById(req.params.courseId);
+
+      delete course.twilio_sid;
+      delete course.twilio_auth_token;
 
       res.render('courses/show', {
         course,

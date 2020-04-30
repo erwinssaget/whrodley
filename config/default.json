@@ -3,6 +3,12 @@
   "host": "localhost",
   "port": 3030,
   "secret": "notverysecret",
+  "pusher": {
+    "appId": "",
+    "key": "",
+    "secret": "",
+    "cluster": ""
+  },
   "postgres": {
     "client": "postgresql",
     "connection": "postgres://postgres:password@postgres:5432/whrodley"
