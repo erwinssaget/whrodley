@@ -58,7 +58,6 @@ function ChatTeamSidebarBottom() {
             className="list-group-item list-group-item-action"
             key={student.id}
             onClick={() => {
-              console.log('clicked', student.id)
               dispatch({ type: types.setActiveThreadForStudent, student })
             }}
           >
@@ -76,11 +75,12 @@ function ChatTeamSidebarBottom() {
 }
 
 function Sidebar() {
-  const { course, students, dispatch } = useContext(ThreadContext);
+  const { course, dispatch } = useContext(ThreadContext);
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const [modal, setModal] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const toggleModal = () => setModal(!modal);
 
@@ -101,7 +101,7 @@ function Sidebar() {
       setName('');
       setNumber('');
     } catch (err) {
-      console.log(err)
+      setErrorMessage(err.response.data.message)
     } finally {
       setLoading(false)
     }
@@ -136,6 +136,7 @@ function Sidebar() {
               <label htmlFor="name">Student Name</label>
               <input
                 className="form-control"
+                required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 id="name"
@@ -151,7 +152,9 @@ function Sidebar() {
                 onChange={(e) => setNumber(e.target.value)}
                 id="number"
                 name="number"
+                required
               />
+              {errorMessage && <small className="form-text text-muted">{errorMessage}</small>}
             </div>
             <button className="btn btn-primary" type="submit" disabled={loading}>
               Submit Form

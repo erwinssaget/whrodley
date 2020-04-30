@@ -6,7 +6,6 @@ module.exports = (err, req, res, next) => {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  log(err);
 
   if (err instanceof NotFound) {
     res.status(404);
@@ -15,6 +14,12 @@ module.exports = (err, req, res, next) => {
   }
 
   // render the error page
-  res.status(err.status || 500);
+  const status = err.status || 500;
+  res.status(status);
+
+  if (req.xhr) {
+    return res.json(err)
+  }
+
   res.render('500');
 };
