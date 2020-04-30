@@ -13,22 +13,37 @@
 </div>
 {{/contentFor}}
 
-<div class="pt-5">
-  <div class="card">
-    <div class="card-body">
-      <form action="/courses" method="POST" autocomplete="off">
-        <input type="hidden" name="_csrf" value="{{csrfToken}}">
-        <div class="form-group">
-          <label for="name">Course Name</label>
-          <input id="name" name="name" class="form-control" autoComplete="off" required />
-        </div>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-lg-11 col-xl-9">
+      <div class="row pt-5">
+        <div class="card">
+          <div class="card-body">
+            <div class="alert alert-info">
+              <h4 class="alert-heading">Create a new course here!</h4>
+              <p>First enter the course's name. Then use the search input to
+                enter in your desired area code. If phone numbers are available for your desired area code,
+                select the phone number you'd like, otherwise try another area code.
+              </p>
+              <span><b>NOTE:</b> You can not enter a phone number in the phone number input. You must select one from
+                the dropdown list.</span>
+            </div>
+            <form action="/courses" method="POST" autocomplete="off">
+              <input type="hidden" name="_csrf" value="{{csrfToken}}">
+              <div class="form-group">
+                <label for="name">Course Name</label>
+                <input id="name" name="name" class="form-control" autofocus autoComplete="off" required />
+              </div>
 
-        <div class="" id="sms-number-picker"></div>
+              <div class="" id="sms-number-picker"></div>
 
-        <div class="row justify-content-end">
-          <button type="submit" class="btn btn-primary">Submit</button>
+              <div class="row justify-content-end pt-2">
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            </form>
+          </div>
         </div>
-      </form>
+      </div>
     </div>
   </div>
 </div>

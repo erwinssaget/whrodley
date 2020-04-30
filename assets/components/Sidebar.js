@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { ThreadContext } from './Threads';
 import http from '../http';
+import types from './actionTypes';
 
 function ChatTeamSidebarTop({ toggleModal }) {
   return (
@@ -17,8 +19,30 @@ function ChatTeamSidebarTop({ toggleModal }) {
   );
 }
 
+// Add this later
+function FilterStudentsForm() {
+  return (
+    <form className="px-3 mb-3">
+      <div className="input-group input-group-round">
+        <div className="input-group-prepend">
+          <span className="input-group-text">
+            <i className="material-icons">filter_list</i>
+          </span>
+        </div>
+        <input
+          type="search"
+          className="form-control filter-list-input"
+          placeholder="Filter members"
+          aria-label="Filter Members"
+          aria-describedby="filter-members"
+        />
+      </div>
+    </form>
+  )
+}
+
 function ChatTeamSidebarBottom() {
-  const [students, setStudents] = useState([]);
+  const { students, dispatch } = useContext(ThreadContext);
 
   if (students.length === 0) {
     return <p className="text-center">No Students Yet!</p>;
@@ -26,33 +50,22 @@ function ChatTeamSidebarBottom() {
 
   return (
     <div className="chat-team-sidebar-bottom">
-      <form className="px-3 mb-3">
-        <div className="input-group input-group-round">
-          <div className="input-group-prepend">
-            <span className="input-group-text">
-              <i className="material-icons">filter_list</i>
-            </span>
-          </div>
-          <input
-            type="search"
-            className="form-control filter-list-input"
-            placeholder="Filter members"
-            aria-label="Filter Members"
-            aria-describedby="filter-members"
-          />
-        </div>
-      </form>
+      {/* <FilterStudentsForm /> */}
       <div className="list-group list-group-flush">
         {students.map((student) => (
           <button
             type="button"
             className="list-group-item list-group-item-action"
-            key={student}
+            key={student.id}
+            onClick={() => {
+              console.log('clicked', student.id)
+              dispatch({ type: types.setActiveThreadForStudent, student })
+            }}
           >
             <div className="media media-member mb-0">
               <div className="media-body">
-                <h6 className="mb-0">Claire Connors</h6>
-                <span className="SPAN-filter-by-text">Administrator</span>
+                <h6 className="mb-0">{student.name}</h6>
+                <span>{student.friendly_phone_number}</span>
               </div>
             </div>
           </button>
@@ -62,27 +75,36 @@ function ChatTeamSidebarBottom() {
   );
 }
 
-export default function Sidebar() {
+function Sidebar() {
+  const { course, students, dispatch } = useContext(ThreadContext);
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const [modal, setModal] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const toggleModal = () => setModal(!modal);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
-    const data = {
-      name,
-      number,
-    };
-    console.log(data);
-    const response = await http.post('/students', data);
-    console.log(response.data);
+    try {
+      const { data } = await http.post('/students', {
+        name,
+        number,
+        courseId: course.id,
+      });
 
-    toggleModal();
-    setName('');
-    setNumber('');
+      dispatch({ type: types.addStudent, student: data })
+
+      toggleModal();
+      setName('');
+      setNumber('');
+    } catch (err) {
+      console.log(err)
+    } finally {
+      setLoading(false)
+    }
   };
 
   const closeBtn = (
@@ -131,7 +153,7 @@ export default function Sidebar() {
                 name="number"
               />
             </div>
-            <button className="btn btn-primary" type="submit">
+            <button className="btn btn-primary" type="submit" disabled={loading}>
               Submit Form
             </button>
           </form>
@@ -149,3 +171,5 @@ export default function Sidebar() {
     </div>
   );
 }
+
+export default React.memo(Sidebar)

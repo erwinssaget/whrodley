@@ -8,16 +8,12 @@ const log = require('debug')('app:MessagesController');
 module.exports = {
   index: async (req, res, next) => {
     try {
-      const courseId = req.params.courseId;
-      log('im here');
-      log(courseId);
+      const { courseId } = req.params;
       const course = await Course.query().findById(courseId);
-      log(course);
 
-      // const messages = await course
-      //   .$relatedQuery('messages')
-      //   .where('course_id', course.id);
-      const messages = [];
+      const messages = await course
+        .$relatedQuery('messages')
+        .where('course_id', course.id);
 
       return res.json(messages);
     } catch (err) {
@@ -42,15 +38,17 @@ module.exports = {
         to: '+14705297124',
       });
 
+      console.log(`
+
+
+      `);
       log(twilioResponse);
 
       const message = await Message.query().insert({
-        // account_sid: twilioResponse.accountSid,
-        team_id: team.id,
+        course_id: courseId,
         body,
         from: twilioResponse.from,
         to: twilioResponse.to,
-        // TODO: add status callback
       });
 
       res.json(message);

@@ -20,3 +20,10 @@
 {{/contentFor}}
 
 <div id="messages-page"></div>
+
+{{#contentFor "globals"}}
+<script>
+  // eslint-ignore
+  window.course = {{{ json course }}}
+</script>
+{{/contentFor}}

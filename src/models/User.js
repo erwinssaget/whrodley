@@ -1,6 +1,5 @@
 const { Model } = require('objection');
 const knex = require('../knex');
-const Course = require('./Course');
 
 Model.knex(knex);
 
@@ -23,6 +22,8 @@ class User extends Model {
   }
 
   static get relationMappings() {
+    const Course = require('./Course');
+
     return {
       courses: {
         relation: Model.ManyToManyRelation,

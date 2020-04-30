@@ -5,6 +5,7 @@ exports.up = function (knex) {
     table.bigIncrements('id').unsigned().primary();
     table.string('name');
     table.string('phone_number');
+    table.string('friendly_phone_number');
     table.timestamp('created_at');
     table.timestamp('updated_at');
   });
