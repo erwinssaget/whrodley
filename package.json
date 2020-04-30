@@ -89,6 +89,7 @@
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.1",
     "react-dom": "^16.13.1",
+    "react-textarea-autosize": "^7.1.2",
     "sinon": "^9.0.2",
     "sinon-chai": "^3.3.0",
     "sqlite3": "^4.1.1",

@@ -1,3 +1,4 @@
+const log = require('debug')('app:HomeController');
 const User = require('../models/User');
 
 module.exports = {
@@ -5,8 +6,10 @@ module.exports = {
     const user = req.session.user;
 
     try {
-      const courses = await User.relatedQuery('courses').for(user.id);
+      const results = await User.query().where('id', user.id).withGraphFetched('courses.students')
 
+      const courses = results[0].courses;
+      log(courses)
       res.render('home', {
         csrfToken: req.csrfToken(),
         courses,

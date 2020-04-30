@@ -14,7 +14,8 @@ function Threads() {
     course: window.course,
     students: [],
     messages: [],
-    activeThread: null
+    activeThread: null,
+    activeStudent: null,
   }
 
   const threadsReducer = function (state, action) {
@@ -23,7 +24,7 @@ function Threads() {
         const student = action.student;
         const studentPhoneNumber = student.phone_number;
         const messages = state.messages.filter(msg => msg.from === studentPhoneNumber)
-        return { ...state, activeThread: messages };
+        return { ...state, activeThread: messages, activeStudent: student };
       case types.addStudent:
         const updatedStudentList = [...state.students, action.student];
         return { ...state, students: updatedStudentList }
@@ -34,17 +35,19 @@ function Threads() {
         return { ...state, messages: updatedMessages }
       case types.setMessages:
         return { ...state, messages: action.messages }
+      case types.viewAllThreads:
+        return { ...state, activeThread: null, activeStudent: null }
       default:
         console.log(`Executed default case in reducer`);
         return state;
     }
   }
 
-  const [{ course, students, messages, activeThread }, dispatch] = useReducer(threadsReducer, initialThreadState)
+  const [state, dispatch] = useReducer(threadsReducer, initialThreadState)
 
   // Set up pusher for real time
   useEffect(() => {
-    const channel = pusher.subscribe(`course-${course.id}`);
+    const channel = pusher.subscribe(`course-${state.course.id}`);
 
     channel.bind('incoming-sms', ({ message }) => {
       if (message) {
@@ -53,7 +56,7 @@ function Threads() {
     });
 
     return () => {
-      pusher.unsubscribe(`course-${course.id}`)
+      pusher.unsubscribe(`course-${state.course.id}`)
     }
   }, []);
 
@@ -75,7 +78,7 @@ function Threads() {
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const { data } = await http.get(`/courses/${course.id}/students`)
+        const { data } = await http.get(`/courses/${state.course.id}/students`)
 
         dispatch({ type: types.setStudents, students: data })
       } catch (err) {
@@ -84,13 +87,10 @@ function Threads() {
     }
 
     fetchStudents();
-  }, [course.id]);
+  }, [state.course.id]);
 
   const value = {
-    course,
-    students,
-    messages,
-    activeThread,
+    ...state,
     dispatch
   }
 

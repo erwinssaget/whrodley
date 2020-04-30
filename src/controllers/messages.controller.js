@@ -1,9 +1,10 @@
 const config = require('config');
 const createError = require('http-errors');
-const Message = require('../models/Message');
 const twilio = require('twilio');
-const Course = require('../models/Course');
 const log = require('debug')('app:MessagesController');
+const Message = require('../models/Message');
+const Course = require('../models/Course');
+const Student = require('../models/Student')
 
 module.exports = {
   index: async (req, res, next) => {
@@ -23,37 +24,30 @@ module.exports = {
 
   store: async (req, res, next) => {
     const courseId = req.params.courseId;
+    const { body, student } = req.body;
 
     // get the team associated with authenticated user
     const course = await Course.query().findById(courseId);
-
-    const twilioClient = twilio(course.twilio_sid, course.twilio_auth_token);
-
-    const { body } = req.body;
+    const studentInfo = await Student.query().findById(student.id);
 
     try {
-      const twilioResponse = await twilioClient.messages.create({
+      const twilioResponse = await twilio(course.twilio_sid, course.twilio_auth_token).messages.create({
         body,
         from: course.phone_number,
-        to: '+14705297124',
+        to: studentInfo.phone_number,
       });
-
-      console.log(`
-
-
-      `);
-      log(twilioResponse);
 
       const message = await Message.query().insert({
         course_id: courseId,
         body,
         from: twilioResponse.from,
         to: twilioResponse.to,
+        sms_sid: twilioResponse.SmsSid
       });
 
       res.json(message);
     } catch (error) {
-      req.log.error(error);
+      log(error)
       next(error);
     }
   },
