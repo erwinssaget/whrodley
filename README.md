@@ -1,54 +1,95 @@
-# Whrodley
+# Twilio Hackathon App
 
-### Table of Contents
+## About
 
-**[Installation Instructions](#installation-instructions)**<br>
-**[Useful Commands To Know](#useful-commands)**<br>
-**[Database Structure](#database)**<br>
+This app was built to facilitate communication via sms when handling students via a remote classroom.
 
-## Installation Instructions
+### How it works
 
-It's pretty simple to get started. There are two ways to run this repository (locally on your machine or using Docker).
-Regardless of how you choose to run this repo, you'll need to copy the `.env.example` file in the
-root folder in this repository and rename to `.env`. You will also need to create a few accounts.
+An instructor signs up and chooses a phone number to represent their class. From there they can invite students to the class via text, and communicate back and forth.
 
-1. [Mailtrap](https://mailtrap.io)
-2. In addition, you may want to also install [TablePlus](https://www.tableplus.io/download), [PSequel](http://www.psequel.com), or [pgAdmin](https://www.pgadmin.org/download/) to view database tables
+## Features
 
-### Locally
+- Docker workflow
+- Node.js web server using [Express.js](https://npm.im/express)
+- Basic web user interface using [Handlebars](https://npm.im/express-handlebars) for templating and Bootstrap for UI
+- Unit tests using [`mocha`](https://npm.im/mocha) and [`chai`](https://npm.im/chai)
+- Linting and formatting using [ESLint](https://npm.im/eslint) and [Prettier](https://npm.im/prettier)
 
-1. Install Node (or NVM). Make sure you use the version of Node that is specified in package.json
-2. Install Postgres.
-3. Run `npm run build` OR `npm run build:watch`
-4. Run `npm start`
+## How to use it
+1. Install Docker
+2. Change env.example to .env and fill in variables
+3. Run docker-compose up --build
 
-### Docker
+## Set up
 
-1. Install [Docker](https://www.docker.com/products/docker-desktop).
-2. Run `docker-compose up`.
+### Requirements
 
-## Useful Commands
+- [Docker](https://docs.docker.com/get-docker/)
+- A Twilio account - [sign up](https://www.twilio.com/try-twilio)
+- A Pusher Account - [sign up with Github](https://dashboard.pusher.com/accounts/sign_up)
+- Ngrok - to get messages in real time [download here](https://ngrok.com/download)
+- Mailtrap - [sign up with Github](https://mailtrap.io/register/signup?ref=header)
+
+
+### App .env Variables
+
+| Config&nbsp;Value   | Description                                                                                                                                                  |
+| :----------------  | :----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| HOST               | The ngrok url that you get after running `ngrok http 3030` (use reg http, not https)|
+| TWILIO_ACCOUNT_SID | Your primary Twilio account identifier - find this [in the Console](https://www.twilio.com/console).                                                         |
+| TWILIO_AUTH_TOKEN  | Used to authenticate - [just like the above, you'll find this here](https://www.twilio.com/console).                                                         |
+| PUSHER_APP_ID      | Your pusher app id|
+| PUSHER_APP_KEY     | Your pusher app App key (this also needs to be added into the assets/pusher.js file) |
+| PUSHER_APP_SECRET  | Your pusher app secret|
+| PUSHER_CLUSTER     | The cluster your app region is in|
+| MAIL_USER          | mailtrap user - shown in dashboard |
+| MAIL_PASSWORD      | mailtrap password - also shown in dashboard |
+
+
+### Local development
+
+After the above requirements have been met:
+
+1. Clone this repository and `cd` into it
 
 ```bash
-# Running with docker
-$ docker-compose up # add --build to rebuild images
-$ docker-compose down # to stop processes, add -v to remove named volumes
-
-# Running commands inside of Docker container
-$ docker-compose exec app bash
-
-# Working with asset files
-$ npm run build # or npm run build:watch
-
-# Creating a migration
-$ knex migrate:make migration_name
-
-# Running migrations
-$ knex migrate:latest
-
-# Creating seed files
-$ knex seed:make seed_name
-
-# Seeds database
-$ knex seed:run
+git clone git@github.com:erwinssaget/whrodley.git
+cd whrodley
 ```
+
+2. Set your environment variables
+
+```bash
+cp .env.example .env
+```
+See above to locate the necessary environment variables.
+
+3. Build and Run
+
+```bash
+docker-compose up --build
+```
+
+5. Navigate to your Ngrok host and view the application.
+
+That's it!
+
+### Tests
+
+You can run the tests locally by typing:
+
+```bash
+npm test
+```
+Testing is not complete however...
+
+## License
+
+[MIT](http://www.opensource.org/licenses/mit-license.html)
+
+## Disclaimer
+
+No warranty expressed or implied. Software is as is.
+
+[twilio]: https://www.twilio.com
