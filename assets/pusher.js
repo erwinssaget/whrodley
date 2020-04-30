@@ -1,6 +1,6 @@
 import Pusher from 'pusher-js';
 
-const pusher = new Pusher('a7e19585f3af4f5b624e', {
+const pusher = new Pusher('YOUR-APP-KEY-HERE', {
   cluster: 'us3',
 });
 
