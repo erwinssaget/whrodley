@@ -64,7 +64,7 @@
     "@babel/runtime": "^7.9.2",
     "@reach/dialog": "^0.10.0",
     "@reach/visually-hidden": "^0.10.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "cheerio": "^1.0.0-rc.3",
